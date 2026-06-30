@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard Prova 1 - Aprendizagem e Erros</title>
+  <title>Dashboard Comparativo - Provas 1 e 2</title>
   <style>
     :root {
       --bg: #f4f7f5;
@@ -69,7 +69,6 @@
       color: var(--teal);
       font-size: 0.82rem;
       font-weight: 800;
-      letter-spacing: 0;
       text-transform: uppercase;
       margin: 0 0 8px;
     }
@@ -161,7 +160,7 @@
 
     .bar-row {
       display: grid;
-      grid-template-columns: 52px 1fr 74px;
+      grid-template-columns: 86px 1fr 74px;
       gap: 12px;
       align-items: center;
       margin: 12px 0;
@@ -259,130 +258,94 @@
     .pill {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-width: 34px;
-      padding: 4px 8px;
-      border-radius: 99px;
-      background: #edf2ef;
-      font-weight: 800;
-      font-size: 0.86rem;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--ink);
+      background: #eef3f1;
     }
 
     .pill.red {
       background: var(--coral-soft);
-      color: #8d2f20;
+      color: var(--coral);
     }
 
     .pill.gold {
       background: var(--gold-soft);
-      color: #75550d;
+      color: #896311;
     }
 
     .pill.teal {
       background: var(--teal-soft);
-      color: #07554e;
+      color: var(--teal);
     }
 
-    .content-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .content-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 16px;
-      background: #fbfdfc;
-    }
-
-    .content-card strong {
-      display: block;
-      font-size: 1.55rem;
-      line-height: 1;
-      margin: 8px 0;
-    }
-
-    .content-card span {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
+    .content-grid,
     .distribution {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .bucket {
-      background: #fbfdfc;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 14px;
-      text-align: center;
-    }
-
-    .bucket strong {
-      display: block;
-      font-size: 1.8rem;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-
-    .bucket span {
-      color: var(--muted);
-      font-size: 0.84rem;
-    }
-
-    .student-guide {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
     }
 
-    .guide-item {
-      border-top: 5px solid var(--teal);
-      background: #fbfdfc;
-      border-radius: 8px;
+    .content-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .distribution {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .content-card,
+    .bucket {
+      border: 1px solid var(--line);
+      border-radius: 10px;
       padding: 16px;
-      border-left: 1px solid var(--line);
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
+      background: #fbfcfb;
     }
 
-    .guide-item:nth-child(2) {
-      border-top-color: var(--gold);
+    .content-card span,
+    .bucket span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
 
-    .guide-item:nth-child(3) {
-      border-top-color: var(--coral);
+    .content-card strong,
+    .bucket strong {
+      display: block;
+      font-size: 1.9rem;
+      margin: 6px 0;
+    }
+
+    .guide-item {
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .guide-item:first-child {
+      border-top: 0;
+      padding-top: 0;
     }
 
     footer {
       color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 24px;
+      font-size: 0.84rem;
+      text-align: center;
+      padding: 18px 0 8px;
     }
 
-    @media (max-width: 880px) {
+    @media (max-width: 960px) {
       header,
       .two-col,
       .metrics,
       .content-grid,
-      .student-guide,
       .distribution {
         grid-template-columns: 1fr;
       }
 
-      main {
-        width: min(100% - 22px, 1180px);
-        padding-top: 16px;
-      }
-
-      .hero {
-        padding: 22px;
-      }
-
       .bar-row {
-        grid-template-columns: 44px 1fr 64px;
+        grid-template-columns: 72px 1fr 62px;
       }
     }
   </style>
@@ -391,266 +354,249 @@
   <main>
     <header>
       <section class="hero">
-        <p class="kicker">Pedagogias em Educação Musical I · Prova 1</p>
-        <h1>O que a prova revela sobre aprendizagem</h1>
-        <p class="lead">Leitura anonimizada dos padrões de acerto, erro e confusão conceitual. A intenção é usar a prova como devolutiva formativa: entender onde a turma consolidou repertório e onde a leitura de questão ou a comparação entre métodos ainda precisa de trabalho.</p>
+        <p class="kicker">Pedagogias em Educação Musical I · Provas 1 e 2 · Versão pública</p>
+        <h1>O que a comparação entre as duas provas revela</h1>
+        <p class="lead">Leitura pública e anonimizada do desempenho da turma nas duas provas. O foco aqui não é identificar estudantes, mas mostrar se a aprendizagem se consolidou, onde houve avanço coletivo e quais pontos ainda exigem retomada pedagógica.</p>
       </section>
       <aside class="meta">
         <div>
           <strong>11</strong>
-          <span>estudantes com lançamento concluído</span>
+          <span>estudantes na coorte comparável entre Prova 1 e Prova 2</span>
         </div>
         <div>
-          <strong>18</strong>
-          <span>questões objetivas, com 17 válidas para leitura de conteúdo e 1 anulada computada como acerto</span>
+          <strong>2</strong>
+          <span>provas comparadas, com a P2 já consolidada na nota final</span>
         </div>
         <div>
-          <strong>1,0</strong>
-          <span>ponto da dissertativa, analisado separadamente</span>
+          <strong>0</strong>
+          <span>identificações individuais expostas nesta versão</span>
         </div>
       </aside>
     </header>
 
     <section class="grid metrics" aria-label="Indicadores gerais">
       <article class="metric">
-        <div class="value">8,5</div>
-        <div class="label">média final da amostra</div>
+        <div class="value">7,1</div>
+        <div class="label">média objetiva ajustada da Prova 1</div>
       </article>
       <article class="metric">
-        <div class="value">7,6</div>
-        <div class="label">média da parte objetiva</div>
+        <div class="value">7,4</div>
+        <div class="label">média objetiva da Prova 2</div>
       </article>
       <article class="metric">
-        <div class="value">72,7%</div>
-        <div class="label">erro na questão mais crítica</div>
+        <div class="value">8,3</div>
+        <div class="label">média final da Prova 2</div>
       </article>
       <article class="metric">
-        <div class="value">34,1%</div>
-        <div class="label">erro médio em itens negativos</div>
+        <div class="value">1,26 → 0,56</div>
+        <div class="label">queda da dispersão entre P1 e P2</div>
       </article>
     </section>
 
     <section class="grid two-col">
       <article class="panel">
-        <h2>Questões que mais revelam dificuldade</h2>
+        <h2>Sinais de resultado</h2>
+        <div class="bar-row">
+          <div class="bar-label">Ganho</div>
+          <div class="bar-track"><div class="bar steady" style="width: 54.5%"></div></div>
+          <div class="percent">54,5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Estável</div>
+          <div class="bar-track"><div class="bar soft" style="width: 9.1%"></div></div>
+          <div class="percent">9,1%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Queda</div>
+          <div class="bar-track"><div class="bar warning" style="width: 36.4%"></div></div>
+          <div class="percent">36,4%</div>
+        </div>
+        <div class="callout teal">
+          <strong>Leitura central:</strong> mais da metade da coorte melhorou na comparação objetiva entre P1 ajustada e P2. O dado mais forte não é a média, mas a subida do piso da turma de 3,5 para 6,0 e a redução acentuada da dispersão.
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Distribuição da coorte</h2>
+        <div class="distribution">
+          <div class="bucket">
+            <strong>1</strong>
+            <span>estudante até 6,0 na P1 ajustada</span>
+          </div>
+          <div class="bucket">
+            <strong>1</strong>
+            <span>estudante até 6,0 na P2 objetiva</span>
+          </div>
+          <div class="bucket">
+            <strong>7</strong>
+            <span>estudantes entre 7,5 e 8,0 na P1 ajustada</span>
+          </div>
+          <div class="bucket">
+            <strong>8</strong>
+            <span>estudantes com 8,5 ou mais na nota final da P2</span>
+          </div>
+        </div>
+        <div class="callout gold">
+          <strong>O que mudou:</strong> a Prova 2 não cria um salto de média, mas comprime a turma para cima e entrega um fechamento final forte, com a maior parte da coorte em faixa alta após a dissertativa.
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Aprendizagem por bloco de conteúdo</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tema</th>
+              <th>Prova 1</th>
+              <th>Prova 2</th>
+              <th>Leitura</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Associação e comparação</td>
+              <td>88,6%</td>
+              <td>100,0%</td>
+              <td>Domínio consolidado. Reconhecer autor por característica foi o melhor desempenho da coorte.</td>
+            </tr>
+            <tr>
+              <td>Willems</td>
+              <td>90,9%</td>
+              <td>90,9%</td>
+              <td>Estabilidade alta nas duas provas.</td>
+            </tr>
+            <tr>
+              <td>Kodály</td>
+              <td>86,4%</td>
+              <td>86,4%</td>
+              <td>Conteúdo estável, com boa retenção.</td>
+            </tr>
+            <tr>
+              <td>Orff</td>
+              <td>68,2%</td>
+              <td>95,5%</td>
+              <td>Maior recuperação comparativa entre os blocos recorrentes.</td>
+            </tr>
+            <tr>
+              <td>Suzuki</td>
+              <td>63,6%</td>
+              <td>86,4%</td>
+              <td>Sai da zona crítica e passa a desempenho consistente.</td>
+            </tr>
+            <tr>
+              <td>Schafer</td>
+              <td>—</td>
+              <td>97,0%</td>
+              <td>Conteúdo novo com assimilação muito forte.</td>
+            </tr>
+            <tr>
+              <td>Segunda geração</td>
+              <td>—</td>
+              <td>90,9%</td>
+              <td>Entrada muito bem consolidada na P2.</td>
+            </tr>
+            <tr>
+              <td>Swanwick</td>
+              <td>—</td>
+              <td>54,5%</td>
+              <td>Ponto mais frágil da P2, concentrado em diferenciações conceituais finas.</td>
+            </tr>
+            <tr>
+              <td>Lucy Green</td>
+              <td>—</td>
+              <td>63,6%</td>
+              <td>Conteúdo novo ainda instável.</td>
+            </tr>
+            <tr>
+              <td>Metodologias ativas</td>
+              <td>90,9%</td>
+              <td>54,5%</td>
+              <td>Cai quando a pergunta exige enquadramento abstrato, não apenas reconhecimento.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout teal">
+        <strong>Sinal de sucesso:</strong> a turma ficou muito forte em associação de autores, Orff, Schafer e segunda geração. O principal limite público a apontar é mais localizado: conceitos abstratos e princípios de Swanwick.
+      </div>
+    </section>
+
+    <section class="grid two-col">
+      <article class="panel">
+        <h2>Questões que mais exigem retomada</h2>
+        <div class="bar-row">
+          <div class="bar-label">Q16</div>
+          <div class="bar-track"><div class="bar critical" style="width: 90.9%"></div></div>
+          <div class="percent">90,9%</div>
+        </div>
         <div class="bar-row">
           <div class="bar-label">Q17</div>
           <div class="bar-track"><div class="bar critical" style="width: 72.7%"></div></div>
           <div class="percent">72,7%</div>
         </div>
         <div class="bar-row">
+          <div class="bar-label">Q1</div>
+          <div class="bar-track"><div class="bar warning" style="width: 54.5%"></div></div>
+          <div class="percent">54,5%</div>
+        </div>
+        <div class="bar-row">
           <div class="bar-label">Q4</div>
           <div class="bar-track"><div class="bar warning" style="width: 45.5%"></div></div>
           <div class="percent">45,5%</div>
         </div>
-        <div class="bar-row">
-          <div class="bar-label">Q3</div>
-          <div class="bar-track"><div class="bar soft" style="width: 27.3%"></div></div>
-          <div class="percent">27,3%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label">Q10</div>
-          <div class="bar-track"><div class="bar soft" style="width: 27.3%"></div></div>
-          <div class="percent">27,3%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label">Q1</div>
-          <div class="bar-track"><div class="bar steady" style="width: 18.2%"></div></div>
-          <div class="percent">18,2%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label">Q2</div>
-          <div class="bar-track"><div class="bar steady" style="width: 18.2%"></div></div>
-          <div class="percent">18,2%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label">Q9</div>
-          <div class="bar-track"><div class="bar steady" style="width: 18.2%"></div></div>
-          <div class="percent">18,2%</div>
-        </div>
         <div class="callout">
-          <strong>Leitura central:</strong> Q17 concentra erro demais para ser tratada como simples falta de estudo. Ela deve virar discussão sobre leitura de enunciado, alternativas próximas e armadilhas típicas de concurso.
+          <strong>Leitura central:</strong> a questão mais crítica da P1 foi Suzuki em item do tipo “EXCETO”; na P2, o problema migra para Swanwick e princípios. Isso sugere evolução real em alguns pontos e emergência de nova dificuldade localizada.
         </div>
       </article>
 
       <article class="panel">
-        <h2>Formato do item importa</h2>
+        <h2>Formato da questão também pesa</h2>
         <div class="bar-row">
-          <div class="bar-label">Neg.</div>
-          <div class="bar-track"><div class="bar critical" style="width: 34.1%"></div></div>
-          <div class="percent">34,1%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-label">Outros</div>
-          <div class="bar-track"><div class="bar steady" style="width: 11.2%"></div></div>
-          <div class="percent">11,2%</div>
-        </div>
-        <div class="callout gold">
-          <strong>Hipótese pedagógica:</strong> a turma sabe reconhecer muitos conceitos, mas perde desempenho quando precisa inverter o raciocínio em itens como “incorreta”, “afirmação falsa” ou “EXCETO”.
-        </div>
-        <div class="callout teal">
-          <strong>Devolutiva para aula:</strong> treinar a leitura ativa do comando antes de discutir a alternativa correta. Primeiro: “o que a questão pede?” Depois: “qual alternativa contradiz o método?”.
-        </div>
-      </article>
-    </section>
-
-    <section class="panel">
-      <h2>Distratores que mais puxaram a turma</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Questão</th>
-              <th>Tema</th>
-              <th>Gabarito</th>
-              <th>Distrator dominante</th>
-              <th>O que isso sugere</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="pill red">Q17</span></td>
-              <td>Suzuki · EXCETO</td>
-              <td>B</td>
-              <td>E, marcada por 8 estudantes</td>
-              <td>Confusão compartilhada ou ambiguidade forte; bom item para discutir armadilha de concurso.</td>
-            </tr>
-            <tr>
-              <td><span class="pill gold">Q4</span></td>
-              <td>Orff · afirmação falsa</td>
-              <td>D</td>
-              <td>B, marcada por 3 estudantes</td>
-              <td>Mistura de dificuldade conceitual sobre Orff com efeito do enunciado negativo.</td>
-            </tr>
-            <tr>
-              <td><span class="pill teal">Q3</span></td>
-              <td>Kodaly · solfejo</td>
-              <td>B</td>
-              <td>A, marcada por 2 estudantes</td>
-              <td>Erro mais ligado ao conteúdo específico: escala pentatônica e alfabetização musical.</td>
-            </tr>
-            <tr>
-              <td><span class="pill teal">Q10</span></td>
-              <td>Associação de colunas</td>
-              <td>C</td>
-              <td>B, marcada por 2 estudantes</td>
-              <td>Dificuldade de associar autor e característica com precisão comparativa.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>Aprendizagem por bloco de conteúdo</h2>
-      <div class="grid content-grid">
-        <div class="content-card">
-          <span>Willems</span>
-          <strong>90,9%</strong>
-          <span>bom desempenho geral</span>
-        </div>
-        <div class="content-card">
-          <span>Dalcroze</span>
-          <strong>88,6%</strong>
-          <span>base conceitual bem assimilada</span>
-        </div>
-        <div class="content-card">
-          <span>Kodaly</span>
-          <strong>86,4%</strong>
-          <span>boa assimilação, com revisão pontual</span>
-        </div>
-        <div class="content-card">
-          <span>Comparações amplas</span>
-          <strong>88,6%</strong>
-          <span>associação entre autores foi razoável</span>
-        </div>
-        <div class="content-card">
-          <span>Métodos ativos gerais</span>
-          <strong>90,9%</strong>
-          <span>princípios gerais consolidados</span>
-        </div>
-        <div class="content-card">
-          <span>Orff</span>
-          <strong>68,2%</strong>
-          <span>ponto prioritário de retomada</span>
-        </div>
-        <div class="content-card">
-          <span>Suzuki</span>
-          <strong>63,6%</strong>
-          <span>queda concentrada na Q17</span>
-        </div>
-      </div>
-      <div class="callout gold">
-        <strong>Nuance importante:</strong> Suzuki aparece como eixo frágil por causa da Q17, mas Q13 teve 100% de acerto. Em Orff, a dificuldade apareceu em mais de uma questão, o que indica uma retomada conceitual mais necessária.
-      </div>
-    </section>
-
-    <section class="grid two-col">
-      <article class="panel">
-        <h2>Distribuição de acertos objetivos</h2>
-        <div class="distribution">
-          <div class="bucket">
-            <strong>4</strong>
-            <span>estudantes com 17 acertos</span>
-          </div>
-          <div class="bucket">
-            <strong>3</strong>
-            <span>estudantes com 16 acertos</span>
-          </div>
-          <div class="bucket">
-            <strong>2</strong>
-            <span>estudantes com 15 acertos</span>
-          </div>
-          <div class="bucket">
-            <strong>2</strong>
-            <span>estudantes com 14 acertos</span>
-          </div>
-          <div class="bucket">
-            <strong>1</strong>
-            <span>estudante com 8 acertos</span>
-          </div>
-        </div>
-        <div class="callout teal">
-          <strong>Como se localizar:</strong> quem ficou entre 14 e 17 acertos está dentro da faixa principal da turma. A diferença mais formativa está em quais questões foram erradas, não apenas na nota.
-        </div>
-      </article>
-
-      <article class="panel">
-        <h2>Dissertativa</h2>
-        <div class="bar-row">
-          <div class="bar-label">Máx.</div>
-          <div class="bar-track"><div class="bar steady" style="width: 90.9%"></div></div>
-          <div class="percent">90,9%</div>
+          <div class="bar-label">Assoc.</div>
+          <div class="bar-track"><div class="bar steady" style="width: 100%"></div></div>
+          <div class="percent">100,0%</div>
         </div>
         <div class="bar-row">
-          <div class="bar-label">Zero</div>
+          <div class="bar-label">EXCETO</div>
+          <div class="bar-track"><div class="bar steady" style="width: 87.9%"></div></div>
+          <div class="percent">87,9%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Multi.</div>
+          <div class="bar-track"><div class="bar soft" style="width: 81.8%"></div></div>
+          <div class="percent">81,8%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Princ.</div>
           <div class="bar-track"><div class="bar critical" style="width: 9.1%"></div></div>
           <div class="percent">9,1%</div>
         </div>
-        <p>A dissertativa funcionou mais como verificação de realização da tarefa do que como medida fina de níveis de elaboração conceitual.</p>
+        <div class="callout gold">
+          <strong>Hipótese pedagógica:</strong> o problema da P2 não parece ser “prova mais difícil” em geral. A turma foi bem em vários formatos e derrapou fortemente em um tipo muito específico de formulação conceitual.
+        </div>
       </article>
     </section>
 
     <section class="panel">
-      <h2>Roteiro de devolutiva para os estudantes</h2>
-      <div class="student-guide">
-        <div class="guide-item">
-          <h3>1. Conferir o tipo de erro</h3>
-          <p>Separar erro de conteúdo, erro de leitura do comando e erro por alternativa muito próxima. Isso ajuda o estudante a saber o que estudar.</p>
-        </div>
-        <div class="guide-item">
-          <h3>2. Revisar os quatro pontos críticos</h3>
-          <p>Q17, Q4, Q3 e Q10 devem orientar a retomada: Suzuki, Orff, Kodaly e comparação entre autores.</p>
-        </div>
-        <div class="guide-item">
-          <h3>3. Transformar erro em estratégia</h3>
-          <p>Nos itens negativos, marcar primeiro o comando da questão. Nas associações, justificar por que uma característica pertence a um autor e não a outro.</p>
-        </div>
+      <h2>O que este painel permite afirmar publicamente</h2>
+      <div class="guide-item">
+        <h3>1. Houve redução da desigualdade interna</h3>
+        <p>Mesmo com média objetiva praticamente estável em termos percentuais, a turma ficou menos espalhada e o piso subiu bastante da primeira para a segunda prova.</p>
+      </div>
+      <div class="guide-item">
+        <h3>2. O avanço foi real em conteúdos importantes</h3>
+        <p>Orff, Suzuki, associação de autores e conteúdos da segunda geração aparecem mais consolidados na Prova 2 do que na Prova 1.</p>
+      </div>
+      <div class="guide-item">
+        <h3>3. O insucesso não é difuso</h3>
+        <p>As fragilidades da P2 se concentram em Swanwick, Lucy Green e no enquadramento abstrato das metodologias ativas, o que permite intervenção pedagógica bastante focalizada.</p>
       </div>
     </section>
 
     <footer>
-      Dashboard produzido a partir dos lançamentos parciais da Prova 1. Todos os dados estão anonimizados e devem ser recalculados quando o restante da turma for incluído.
+      Versão pública e anonimizada do dashboard comparativo. O painel detalhado com trajetórias e assinaturas individuais foi preservado separadamente para uso interno.
     </footer>
   </main>
 </body>
