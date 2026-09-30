@@ -17,7 +17,6 @@
       --axis: #c3c2b7;
       --border: rgba(11, 11, 11, 0.10);
       --s1: #2a78d6;
-      --s2: #eb6834;
       --band: rgba(11, 11, 11, 0.045);
       --sel-band: rgba(11, 11, 11, 0.085);
       --wash: rgba(11, 11, 11, 0.045);
@@ -35,7 +34,6 @@
         --axis: #383835;
         --border: rgba(255, 255, 255, 0.10);
         --s1: #3987e5;
-        --s2: #d95926;
         --band: rgba(255, 255, 255, 0.05);
         --sel-band: rgba(255, 255, 255, 0.10);
         --wash: rgba(255, 255, 255, 0.05);
@@ -53,7 +51,6 @@
       --axis: #383835;
       --border: rgba(255, 255, 255, 0.10);
       --s1: #3987e5;
-      --s2: #d95926;
       --band: rgba(255, 255, 255, 0.05);
       --sel-band: rgba(255, 255, 255, 0.10);
       --wash: rgba(255, 255, 255, 0.05);
@@ -62,7 +59,6 @@
     }
 
     * { box-sizing: border-box; }
-    [hidden] { display: none !important; }
 
     body {
       margin: 0;
@@ -106,50 +102,6 @@
       border-radius: 8px;
     }
 
-    /* ---------- filtro (uma linha, acima do gráfico) ---------- */
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 12px;
-      margin: 24px 0 12px;
-    }
-
-    .filters .label {
-      color: var(--ink-2);
-      font-size: 0.85rem;
-    }
-
-    .seg {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .seg button {
-      appearance: none;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--ink);
-      font: inherit;
-      font-size: 0.88rem;
-      line-height: 1;
-      padding: 9px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      min-height: 36px;
-    }
-
-    .seg button:hover { background: var(--wash); }
-
-    .seg button[aria-pressed="true"] {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--surface);
-      font-weight: 600;
-    }
-
-    .seg button:focus-visible,
     .row:focus-visible,
     .rel-item:focus-visible,
     .clear:focus-visible,
@@ -216,7 +168,6 @@
       flex: none;
     }
 
-    .swatch.bib { background: var(--s2); }
     .swatch.open {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
@@ -423,17 +374,6 @@
 
     .yrs { font-variant-numeric: tabular-nums; }
 
-    .tag {
-      display: inline-block;
-      margin-left: 6px;
-      padding: 0 6px;
-      border: 1px solid var(--axis);
-      border-radius: 999px;
-      font-size: 0.7rem;
-      line-height: 1.45;
-      white-space: nowrap;
-    }
-
     .hint-short { display: none; }
 
     @media (max-width: 640px) {
@@ -460,8 +400,6 @@
       border-radius: 4px;
       background: var(--s1);
     }
-
-    .row.bib .bar { background: var(--s2); }
 
     .bar.open {
       border-top-right-radius: 0;
@@ -513,7 +451,6 @@
 
     .tip .t-name { color: var(--ink-2); }
     .tip .t-meta { margin-top: 4px; color: var(--ink-2); }
-    .tip .t-status { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
     .tip .t-year {
       margin-top: 8px;
       padding-top: 8px;
@@ -532,15 +469,6 @@
     .panel .meta { margin: 4px 0 0; color: var(--ink-2); font-size: 0.88rem; }
     .panel .empty { margin: 0; color: var(--ink-2); font-size: 0.9rem; }
     .panel .empty + .empty { margin-top: 8px; }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 8px;
-      color: var(--ink-2);
-      font-size: 0.8rem;
-    }
 
     .panel h3 {
       margin: 16px 0 6px;
@@ -608,7 +536,7 @@
 
     table {
       width: 100%;
-      min-width: 900px;
+      min-width: 780px;
       border-collapse: collapse;
       font-size: 0.88rem;
     }
@@ -640,16 +568,13 @@
     .notes ul { margin: 0; padding-left: 1.15em; color: var(--ink-2); font-size: 0.9rem; }
     .notes li + li { margin-top: 6px; }
 
-    /* acessibilidade: textura (só em impressão / cores forçadas) — 45° tom sobre tom */
+    /* manter a cor das barras em impressão e em modo de cores forçadas */
     @media print, (forced-colors: active) {
       .bar, .swatch { forced-color-adjust: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .row.bib .bar, .swatch.bib {
-        background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.35) 0 2px, transparent 2px 6px);
-      }
     }
 
     @media print {
-      .filters, .panel, .chip, .cross, .tip { display: none !important; }
+      .panel, .chip, .cross, .tip { display: none !important; }
       .axis { position: static; }
       .layout { grid-template-columns: 1fr; }
     }
@@ -660,20 +585,13 @@
     <header>
       <p class="kicker">Pedagogias em Educação Musical I e II · Unipampa</p>
       <h1>Linha do tempo dos educadores musicais</h1>
-      <p class="lede">Cada barra é uma vida, do ano de nascimento ao ano de morte, e os educadores estão em ordem de nascimento. Onde as barras se sobrepõem no eixo do tempo, essas pessoas foram contemporâneas.</p>
+      <p class="lede">Educadores trabalhados em Pedagogias I e II. Cada barra é uma vida, do ano de nascimento ao ano de morte, e os educadores estão em ordem de nascimento. Onde as barras se sobrepõem no eixo do tempo, essas pessoas foram contemporâneas.</p>
       <p class="lede">Passe o mouse sobre o gráfico para ver quem estava vivo em cada ano. Clique (ou toque) em um nome para destacar com quem essa vida se cruzou.</p>
     </header>
-
-    <div class="filters" role="group" aria-label="Filtrar educadores">
-      <span class="label">Mostrar:</span>
-      <span class="seg" id="filtro"></span>
-    </div>
 
     <div class="layout">
       <section class="card" aria-label="Linha do tempo">
         <div class="legend" id="legend">
-          <span class="key"><span class="swatch"></span>No programa da disciplina</span>
-          <span class="key"><span class="swatch bib"></span>Só na bibliografia do PPC</span>
           <span class="key"><span class="swatch open"></span>Sem data de morte registrada</span>
           <span class="key"><span class="swatch guerra"></span>Guerras mundiais (1914–18 e 1939–45)</span>
         </div>
@@ -706,7 +624,6 @@
               <th scope="col">Nascimento</th>
               <th scope="col">Morte</th>
               <th scope="col">Anos de vida (aprox.)</th>
-              <th scope="col">Situação</th>
               <th scope="col">Bibliografia do PPC</th>
               <th scope="col">Datas conferidas em</th>
             </tr>
@@ -722,8 +639,8 @@
         <li><strong>A barra mostra a vida, não o período de atuação.</strong> Muitos educadores começaram a atuar décadas depois de nascer; a linha do tempo serve para situar gerações, não para datar cada proposta.</li>
         <li><strong>Contemporâneo não quer dizer “conviveram” nem “se influenciaram”.</strong> Significa apenas que os anos de vida se sobrepõem. Os “anos em comum” são contados por ano-calendário, então podem variar em ±1.</li>
         <li><strong>Barra esmaecida à direita:</strong> não há data de morte registrada nas fontes consultadas (a barra vai até o ano corrente).</li>
-        <li><strong>Situação:</strong> “No programa” = educadores com material trabalhado nas aulas; “Só na bibliografia do PPC” = citados nas obras de referência de Pedagogias I e II (Mateiro &amp; Ilari, 2011 e 2016), mas sem material próprio nas aulas.</li>
-        <li><strong>Datas:</strong> conferidas com os slides e o quadro comparativo da disciplina; para quem não tem material próprio, com enciclopédias e páginas institucionais (a tabela abaixo indica a origem de cada uma). Ao encontrar divergência, vale a fonte primária.</li>
+        <li><strong>Quem aparece:</strong> educadores com material trabalhado nas aulas de Pedagogias I e II (slides e pastas da disciplina). Na coluna “Bibliografia do PPC” da tabela, “—” indica quem não é citado nas obras de referência do curso.</li>
+        <li><strong>Datas:</strong> conferidas com os slides e o quadro comparativo da disciplina; para quem não tem material próprio, com enciclopédias e páginas institucionais (a tabela acima indica a origem de cada uma). Ao encontrar divergência, vale a fonte primária.</li>
       </ul>
     </section>
   </main>
@@ -741,40 +658,33 @@
       /* =====================================================================
          DADOS
          nasc / morte: anos (morte = null quando não há data registrada).
-         prog: true  → educador com material trabalhado nas aulas (programa)
-               false → citado só na bibliografia do PPC (Mateiro & Ilari)
          ppc:  onde aparece na bibliografia de Pedagogias I e II (ou null).
          datas: 'slides'  → nascimento (e morte, quando houver) conferidos nos slides/quadro
                             comparativo da disciplina;
                 'externa' → só em fontes externas (enciclopédias, páginas institucionais).
-         Para mudar a classificação de alguém, basta trocar prog: true/false.
+         Educadores com material trabalhado nas aulas de Pedagogias I e II.
          ===================================================================== */
       var MI11 = 'Mateiro & Ilari (2011)';
       var MI16 = 'Mateiro & Ilari (2016)';
 
       var EDU = [
-        { id: 'dalcroze', datas: 'slides',     nome: 'Émile Jaques-Dalcroze',    curto: 'Dalcroze',       nasc: 1865, morte: 1950, pais: 'Suíça',             prog: true,  ppc: MI11 + ', cap. 1' },
-        { id: 'kodaly', datas: 'slides',       nome: 'Zoltán Kodály',            curto: 'Kodály',         nasc: 1882, morte: 1967, pais: 'Hungria',           prog: true,  ppc: MI11 + ', cap. 2' },
-        { id: 'villalobos', datas: 'slides',   nome: 'Heitor Villa-Lobos',       curto: 'Villa-Lobos',    nasc: 1887, morte: 1959, pais: 'Brasil',            prog: true,  ppc: MI16 },
-        { id: 'sapereira', datas: 'slides',    nome: 'Antônio de Sá Pereira',    curto: 'Sá Pereira',     nasc: 1888, morte: 1966, pais: 'Brasil',            prog: true,  ppc: MI16 + ', cap. 2' },
-        { id: 'willems', datas: 'slides',      nome: 'Edgar Willems',            curto: 'Willems',        nasc: 1890, morte: 1978, pais: 'Bélgica / Suíça',   prog: true,  ppc: MI11 + ', cap. 3' },
-        { id: 'mignone', datas: 'externa',      nome: 'Liddy Chiaffarelli Mignone', rotulo: 'Liddy C. Mignone', curto: 'Liddy Mignone', nasc: 1891, morte: 1962, pais: 'Brasil',           prog: true,  ppc: MI16 },
-        { id: 'orff', datas: 'slides',         nome: 'Carl Orff',                curto: 'Orff',           nasc: 1895, morte: 1982, pais: 'Alemanha',          prog: true,  ppc: MI11 + ', cap. 4' },
-        { id: 'martenot', datas: 'externa',     nome: 'Maurice Martenot',         curto: 'Martenot',       nasc: 1898, morte: 1980, pais: 'França',            prog: false, ppc: MI11 + ', cap. 5' },
-        { id: 'suzuki', datas: 'slides',       nome: 'Shinichi Suzuki',          curto: 'Suzuki',         nasc: 1898, morte: 1998, pais: 'Japão',             prog: true,  ppc: MI11 + ', cap. 6; Gerling (1989)' },
-        { id: 'gazzi', datas: 'slides',        nome: 'Gazzi de Sá',              curto: 'Gazzi de Sá',    nasc: 1901, morte: 1981, pais: 'Brasil',            prog: true,  ppc: MI16 },
-        { id: 'koellreutter', datas: 'slides', nome: 'Hans-Joachim Koellreutter', rotulo: 'Hans-J. Koellreutter', curto: 'Koellreutter',  nasc: 1915, morte: 2005, pais: 'Alemanha / Brasil', prog: true,  ppc: MI16 + '; Brito (2001); Koellreutter (1990)' },
-        { id: 'meyer', datas: 'externa',        nome: 'Gertrud Meyer-Denkmann', rotulo: 'G. Meyer-Denkmann', curto: 'Meyer-Denkmann', nasc: 1918, morte: 2014, pais: 'Alemanha',          prog: false, ppc: MI11 + ', cap. 7' },
-        { id: 'scliar', datas: 'externa',       nome: 'Esther Scliar',            curto: 'Esther Scliar',  nasc: 1926, morte: 1978, pais: 'Brasil',            prog: false, ppc: MI16 },
-        { id: 'gordon', datas: 'slides',       nome: 'Edwin E. Gordon',          curto: 'Gordon',         nasc: 1927, morte: 2015, pais: 'Estados Unidos',    prog: true,  ppc: null },
-        { id: 'paynter', datas: 'slides',      nome: 'John Paynter',             curto: 'Paynter',        nasc: 1931, morte: 2010, pais: 'Inglaterra',        prog: true,  ppc: MI11 + ', cap. 8' },
-        { id: 'schafer', datas: 'externa',      nome: 'R. Murray Schafer',        curto: 'Schafer',        nasc: 1933, morte: 2021, pais: 'Canadá',            prog: true,  ppc: MI11 + ', cap. 9; Schafer (1986, 2012)' },
-        { id: 'wuytack', datas: 'externa',      nome: 'Jos Wuytack',              curto: 'Wuytack',        nasc: 1935, morte: null, pais: 'Bélgica',           prog: false, ppc: MI11 + ', cap. 10' },
-        { id: 'swanwick', datas: 'externa',     nome: 'Keith Swanwick',           curto: 'Swanwick',       nasc: 1937, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
-        { id: 'gramani', datas: 'externa',      nome: 'José Eduardo Gramani',     curto: 'Gramani',        nasc: 1944, morte: 1998, pais: 'Brasil',            prog: false, ppc: MI16 },
-        { id: 'thompson', datas: 'slides',     nome: 'Walter Thompson',          curto: 'Thompson',       nasc: 1952, morte: null, pais: 'Estados Unidos',    prog: true,  ppc: null },
-        { id: 'green', datas: 'slides',        nome: 'Lucy Green',               curto: 'Lucy Green',     nasc: 1957, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
-        { id: 'ciavatta', datas: 'slides',     nome: 'Lucas Ciavatta',           curto: 'Ciavatta',       nasc: 1965, morte: null, pais: 'Brasil',            prog: true,  ppc: MI16 }
+        { id: 'dalcroze', datas: 'slides',     nome: 'Émile Jaques-Dalcroze',    curto: 'Dalcroze',       nasc: 1865, morte: 1950, pais: 'Suíça',             ppc: MI11 + ', cap. 1' },
+        { id: 'kodaly', datas: 'slides',       nome: 'Zoltán Kodály',            curto: 'Kodály',         nasc: 1882, morte: 1967, pais: 'Hungria',           ppc: MI11 + ', cap. 2' },
+        { id: 'villalobos', datas: 'slides',   nome: 'Heitor Villa-Lobos',       curto: 'Villa-Lobos',    nasc: 1887, morte: 1959, pais: 'Brasil',            ppc: MI16 },
+        { id: 'sapereira', datas: 'slides',    nome: 'Antônio de Sá Pereira',    curto: 'Sá Pereira',     nasc: 1888, morte: 1966, pais: 'Brasil',            ppc: MI16 + ', cap. 2' },
+        { id: 'willems', datas: 'slides',      nome: 'Edgar Willems',            curto: 'Willems',        nasc: 1890, morte: 1978, pais: 'Bélgica / Suíça',   ppc: MI11 + ', cap. 3' },
+        { id: 'mignone', datas: 'externa',      nome: 'Liddy Chiaffarelli Mignone', rotulo: 'Liddy C. Mignone', curto: 'Liddy Mignone', nasc: 1891, morte: 1962, pais: 'Brasil',           ppc: MI16 },
+        { id: 'orff', datas: 'slides',         nome: 'Carl Orff',                curto: 'Orff',           nasc: 1895, morte: 1982, pais: 'Alemanha',          ppc: MI11 + ', cap. 4' },
+        { id: 'suzuki', datas: 'slides',       nome: 'Shinichi Suzuki',          curto: 'Suzuki',         nasc: 1898, morte: 1998, pais: 'Japão',             ppc: MI11 + ', cap. 6; Gerling (1989)' },
+        { id: 'gazzi', datas: 'slides',        nome: 'Gazzi de Sá',              curto: 'Gazzi de Sá',    nasc: 1901, morte: 1981, pais: 'Brasil',            ppc: MI16 },
+        { id: 'koellreutter', datas: 'slides', nome: 'Hans-Joachim Koellreutter', rotulo: 'Hans-J. Koellreutter', curto: 'Koellreutter',  nasc: 1915, morte: 2005, pais: 'Alemanha / Brasil', ppc: MI16 + '; Brito (2001); Koellreutter (1990)' },
+        { id: 'gordon', datas: 'slides',       nome: 'Edwin E. Gordon',          curto: 'Gordon',         nasc: 1927, morte: 2015, pais: 'Estados Unidos',    ppc: null },
+        { id: 'paynter', datas: 'slides',      nome: 'John Paynter',             curto: 'Paynter',        nasc: 1931, morte: 2010, pais: 'Inglaterra',        ppc: MI11 + ', cap. 8' },
+        { id: 'schafer', datas: 'externa',      nome: 'R. Murray Schafer',        curto: 'Schafer',        nasc: 1933, morte: 2021, pais: 'Canadá',            ppc: MI11 + ', cap. 9; Schafer (1986, 2012)' },
+        { id: 'swanwick', datas: 'externa',     nome: 'Keith Swanwick',           curto: 'Swanwick',       nasc: 1937, morte: null, pais: 'Inglaterra',        ppc: null },
+        { id: 'thompson', datas: 'slides',     nome: 'Walter Thompson',          curto: 'Thompson',       nasc: 1952, morte: null, pais: 'Estados Unidos',    ppc: null },
+        { id: 'green', datas: 'slides',        nome: 'Lucy Green',               curto: 'Lucy Green',     nasc: 1957, morte: null, pais: 'Inglaterra',        ppc: null },
+        { id: 'ciavatta', datas: 'slides',     nome: 'Lucas Ciavatta',           curto: 'Ciavatta',       nasc: 1965, morte: null, pais: 'Brasil',            ppc: MI16 }
       ];
 
       var GUERRAS = [[1914, 1918], [1939, 1945]];
@@ -807,28 +717,12 @@
       var anos = function (n) { return n === 1 ? '1 ano' : n + ' anos'; };
       var faixa = function (e) { return e.nasc + '–' + (e.morte == null ? '' : e.morte); };
       var sobrep = function (a, b) { return Math.min(fim(a), fim(b)) - Math.max(a.nasc, b.nasc); };
-      var statusTxt = function (e) { return e.prog ? 'No programa da disciplina' : 'Só na bibliografia do PPC'; };
       var vidaTxt = function (e) {
         var n = fim(e) - e.nasc;
         return e.morte == null ? 'hoje, cerca de ' + anos(n) + ' desde o nascimento' : 'cerca de ' + anos(n) + ' de vida';
       };
 
-      var state = { filtro: 'todos', sel: null };
-
-      /* ---------- filtro ---------- */
-      var FILTROS = [
-        { id: 'todos', txt: 'Todos', n: EDU.length },
-        { id: 'aula', txt: 'No programa', n: EDU.filter(function (e) { return e.prog; }).length },
-        { id: 'ppc', txt: 'Só na bibliografia do PPC', n: EDU.filter(function (e) { return !e.prog; }).length }
-      ];
-      var filtroEl = $('#filtro');
-      FILTROS.forEach(function (f) {
-        var b = mk('button', null, f.txt + ' · ' + f.n);
-        b.type = 'button';
-        b.dataset.f = f.id;
-        b.addEventListener('click', function () { state.filtro = f.id; render(); });
-        filtroEl.appendChild(b);
-      });
+      var state = { sel: null };
 
       /* ---------- fundo do gráfico: grade e guerras ---------- */
       var plotBack = $('#plotBack');
@@ -848,18 +742,17 @@
 
       /* ---------- linhas ---------- */
       var rowsEl = $('#list');
-      var itemEls = {};   // id -> <li>
       var btnEls = {};    // id -> <button>
 
       EDU.forEach(function (e) {
         var li = mk('li');
-        var b = mk('button', 'row ' + (e.prog ? 'prog' : 'bib'));
+        var b = mk('button', 'row');
         b.type = 'button';
         b.dataset.id = e.id;
         b.setAttribute('aria-pressed', 'false');
         b.setAttribute('aria-label',
           e.nome + ', ' + (e.morte == null ? e.nasc + ', sem data de morte registrada' : e.nasc + ' a ' + e.morte) +
-          '. ' + statusTxt(e) + '. Ativar para destacar os contemporâneos.');
+          '. Ativar para destacar os contemporâneos.');
 
         var lab = mk('span', 'lab');
         var nm = mk('span', 'name');
@@ -869,7 +762,6 @@
         var sub = mk('span', 'sub');
         sub.appendChild(mk('span', 'yrs', faixa(e)));
         sub.appendChild(mk('span', 'pais', ' · ' + e.pais));
-        if (!e.prog) sub.appendChild(mk('span', 'tag', 'só PPC'));
         lab.appendChild(sub);
 
         var track = mk('span', 'track');
@@ -882,7 +774,6 @@
         b.appendChild(track);
         li.appendChild(b);
         rowsEl.appendChild(li);
-        itemEls[e.id] = li;
         btnEls[e.id] = b;
       });
 
@@ -914,28 +805,12 @@
       var panel = $('#panel');
       var tbody = $('#tbody');
 
-      function visiveis() {
-        return EDU.filter(function (e) {
-          return state.filtro === 'todos' || (state.filtro === 'aula' ? e.prog : !e.prog);
-        });
-      }
-
       function render() {
-        var vis = visiveis();
-        var visIds = {};
-        vis.forEach(function (e) { visIds[e.id] = true; });
-        if (state.sel && !visIds[state.sel]) state.sel = null;
-
-        Array.prototype.forEach.call(filtroEl.children, function (b) {
-          b.setAttribute('aria-pressed', String(b.dataset.f === state.filtro));
-        });
-
         var S = state.sel ? byId[state.sel] : null;
         chart.classList.toggle('has-sel', !!S);
 
         EDU.forEach(function (e) {
-          var li = itemEls[e.id], b = btnEls[e.id];
-          li.hidden = !visIds[e.id];
+          var b = btnEls[e.id];
           var isSel = S && e.id === S.id;
           var isRel = S && !isSel && sobrep(S, e) >= 0;
           b.classList.toggle('sel', !!isSel);
@@ -951,8 +826,7 @@
           selband.style.display = 'none';
         }
 
-        renderPanel(vis, S);
-        renderTable(vis);
+        renderPanel(S);
       }
 
       function relItem(o, S) {
@@ -973,14 +847,14 @@
       function grupo(titulo, lista, S) {
         var frag = document.createDocumentFragment();
         frag.appendChild(mk('h3', null, titulo));
-        if (!lista.length) { frag.appendChild(mk('p', 'none', 'Ninguém entre os educadores exibidos.')); return frag; }
+        if (!lista.length) { frag.appendChild(mk('p', 'none', 'Nenhum educador da lista.')); return frag; }
         var ul = mk('ul', 'rel-list');
         lista.forEach(function (o) { ul.appendChild(relItem(o, S)); });
         frag.appendChild(ul);
         return frag;
       }
 
-      function renderPanel(vis, S) {
+      function renderPanel(S) {
         panel.replaceChildren();
         panel.classList.toggle('has-sel', !!S);
 
@@ -990,17 +864,12 @@
           return;
         }
 
-        var badge = mk('span', 'badge');
-        badge.appendChild(mk('span', 'swatch' + (S.prog ? '' : ' bib')));
-        badge.appendChild(document.createTextNode(statusTxt(S)));
-        panel.appendChild(badge);
-
         panel.appendChild(mk('h2', null, S.nome));
         panel.appendChild(mk('p', 'meta', faixa(S) + (S.morte == null ? ' (sem data de morte registrada)' : '') + ' · ' + S.pais));
         panel.appendChild(mk('p', 'meta', vidaTxt(S)));
         panel.appendChild(mk('p', 'meta', 'PPC: ' + (S.ppc || 'não citado na bibliografia de Pedagogias I e II')));
 
-        var outros = vis.filter(function (o) { return o.id !== S.id; });
+        var outros = EDU.filter(function (o) { return o.id !== S.id; });
         var antes = outros.filter(function (o) { return o.nasc < S.nasc && fim(o) >= S.nasc; });
         var depois = outros.filter(function (o) { return o.nasc >= S.nasc && o.nasc <= fim(S); });
         var fora = outros.filter(function (o) { return sobrep(S, o) < 0; });
@@ -1019,9 +888,8 @@
         panel.appendChild(clear);
       }
 
-      function renderTable(vis) {
-        tbody.replaceChildren();
-        vis.forEach(function (e) {
+      function renderTable() {
+        EDU.forEach(function (e) {
           var tr = mk('tr');
           var th = mk('th', null, e.nome);
           th.scope = 'row';
@@ -1030,7 +898,6 @@
           tr.appendChild(mk('td', 'num', String(e.nasc)));
           tr.appendChild(mk('td', 'num', e.morte == null ? 'sem registro' : String(e.morte)));
           tr.appendChild(mk('td', 'num', (e.morte == null ? '≈ ' + (AGORA - e.nasc) + ' (até hoje)' : String(e.morte - e.nasc))));
-          tr.appendChild(mk('td', null, statusTxt(e)));
           tr.appendChild(mk('td', null, e.ppc || '—'));
           tr.appendChild(mk('td', null, e.datas === 'slides' ? 'Slides da disciplina' : 'Fonte externa'));
           tbody.appendChild(tr);
@@ -1052,10 +919,6 @@
         tip.appendChild(mk('div', 't-years', faixa(e) + (e.morte == null ? ' (sem data de morte registrada)' : '')));
         tip.appendChild(mk('div', 't-name', e.nome));
         tip.appendChild(mk('div', 't-meta', e.pais + ' · ' + vidaTxt(e)));
-        var st = mk('div', 't-status');
-        st.appendChild(mk('span', 'swatch' + (e.prog ? '' : ' bib')));
-        st.appendChild(document.createTextNode(statusTxt(e)));
-        tip.appendChild(st);
         if (y != null) tip.appendChild(mk('div', 't-year', contextoAno(e, y)));
         tip.style.display = 'block';
       }
@@ -1080,7 +943,7 @@
 
         var n = 0;
         EDU.forEach(function (e) {
-          var vivo = !itemEls[e.id].hidden && vivoEm(e, y);
+          var vivo = vivoEm(e, y);
           btnEls[e.id].classList.toggle('alive', vivo);
           if (vivo) n++;
         });
@@ -1141,7 +1004,7 @@
         if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return;
         var row = ev.target.closest ? ev.target.closest('.row') : null;
         if (!row) return;
-        var vis = EDU.filter(function (e) { return !itemEls[e.id].hidden; });
+        var vis = EDU;
         var i = vis.findIndex(function (e) { return e.id === row.dataset.id; });
         var j = ev.key === 'ArrowDown' ? Math.min(i + 1, vis.length - 1) : Math.max(i - 1, 0);
         ev.preventDefault();
@@ -1152,6 +1015,7 @@
         if (ev.key === 'Escape' && state.sel) { state.sel = null; render(); }
       });
 
+      renderTable();
       render();
     })();
   </script>
