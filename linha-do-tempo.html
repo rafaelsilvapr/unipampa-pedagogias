@@ -608,7 +608,7 @@
 
     table {
       width: 100%;
-      min-width: 760px;
+      min-width: 900px;
       border-collapse: collapse;
       font-size: 0.88rem;
     }
@@ -705,9 +705,10 @@
               <th scope="col">País</th>
               <th scope="col">Nascimento</th>
               <th scope="col">Morte</th>
-              <th scope="col">Anos de vida</th>
+              <th scope="col">Anos de vida (aprox.)</th>
               <th scope="col">Situação</th>
               <th scope="col">Bibliografia do PPC</th>
+              <th scope="col">Datas conferidas em</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -722,7 +723,7 @@
         <li><strong>Contemporâneo não quer dizer “conviveram” nem “se influenciaram”.</strong> Significa apenas que os anos de vida se sobrepõem. Os “anos em comum” são contados por ano-calendário, então podem variar em ±1.</li>
         <li><strong>Barra esmaecida à direita:</strong> não há data de morte registrada nas fontes consultadas (a barra vai até o ano corrente).</li>
         <li><strong>Situação:</strong> “No programa” = educadores com material trabalhado nas aulas; “Só na bibliografia do PPC” = citados nas obras de referência de Pedagogias I e II (Mateiro &amp; Ilari, 2011 e 2016), mas sem material próprio nas aulas.</li>
-        <li>Datas conferidas em enciclopédias e páginas institucionais (Wikipédia, Wikidata, universidades). Ao encontrar divergência, vale a fonte primária.</li>
+        <li><strong>Datas:</strong> conferidas com os slides e o quadro comparativo da disciplina; para quem não tem material próprio, com enciclopédias e páginas institucionais (a tabela abaixo indica a origem de cada uma). Ao encontrar divergência, vale a fonte primária.</li>
       </ul>
     </section>
   </main>
@@ -743,34 +744,37 @@
          prog: true  → educador com material trabalhado nas aulas (programa)
                false → citado só na bibliografia do PPC (Mateiro & Ilari)
          ppc:  onde aparece na bibliografia de Pedagogias I e II (ou null).
+         datas: 'slides'  → nascimento (e morte, quando houver) conferidos nos slides/quadro
+                            comparativo da disciplina;
+                'externa' → só em fontes externas (enciclopédias, páginas institucionais).
          Para mudar a classificação de alguém, basta trocar prog: true/false.
          ===================================================================== */
       var MI11 = 'Mateiro & Ilari (2011)';
       var MI16 = 'Mateiro & Ilari (2016)';
 
       var EDU = [
-        { id: 'dalcroze',     nome: 'Émile Jaques-Dalcroze',    curto: 'Dalcroze',       nasc: 1865, morte: 1950, pais: 'Suíça',             prog: true,  ppc: MI11 + ', cap. 1' },
-        { id: 'kodaly',       nome: 'Zoltán Kodály',            curto: 'Kodály',         nasc: 1882, morte: 1967, pais: 'Hungria',           prog: true,  ppc: MI11 + ', cap. 2' },
-        { id: 'villalobos',   nome: 'Heitor Villa-Lobos',       curto: 'Villa-Lobos',    nasc: 1887, morte: 1959, pais: 'Brasil',            prog: true,  ppc: MI16 },
-        { id: 'sapereira',    nome: 'Antônio de Sá Pereira',    curto: 'Sá Pereira',     nasc: 1888, morte: 1966, pais: 'Brasil',            prog: true,  ppc: MI16 + ', cap. 2' },
-        { id: 'willems',      nome: 'Edgar Willems',            curto: 'Willems',        nasc: 1890, morte: 1978, pais: 'Bélgica / Suíça',   prog: true,  ppc: MI11 + ', cap. 3' },
-        { id: 'mignone',      nome: 'Liddy Chiaffarelli Mignone', rotulo: 'Liddy C. Mignone', curto: 'Liddy Mignone', nasc: 1891, morte: 1962, pais: 'Brasil',           prog: false, ppc: MI16 },
-        { id: 'orff',         nome: 'Carl Orff',                curto: 'Orff',           nasc: 1895, morte: 1982, pais: 'Alemanha',          prog: true,  ppc: MI11 + ', cap. 4' },
-        { id: 'martenot',     nome: 'Maurice Martenot',         curto: 'Martenot',       nasc: 1898, morte: 1980, pais: 'França',            prog: false, ppc: MI11 + ', cap. 5' },
-        { id: 'suzuki',       nome: 'Shinichi Suzuki',          curto: 'Suzuki',         nasc: 1898, morte: 1998, pais: 'Japão',             prog: true,  ppc: MI11 + ', cap. 6; Gerling (1989)' },
-        { id: 'gazzi',        nome: 'Gazzi de Sá',              curto: 'Gazzi de Sá',    nasc: 1901, morte: 1981, pais: 'Brasil',            prog: true,  ppc: MI16 },
-        { id: 'koellreutter', nome: 'Hans-Joachim Koellreutter', rotulo: 'Hans-J. Koellreutter', curto: 'Koellreutter',  nasc: 1915, morte: 2005, pais: 'Alemanha / Brasil', prog: true,  ppc: MI16 + '; Brito (2001); Koellreutter (1990)' },
-        { id: 'meyer',        nome: 'Gertrud Meyer-Denkmann', rotulo: 'G. Meyer-Denkmann', curto: 'Meyer-Denkmann', nasc: 1918, morte: 2014, pais: 'Alemanha',          prog: false, ppc: MI11 + ', cap. 7' },
-        { id: 'scliar',       nome: 'Esther Scliar',            curto: 'Esther Scliar',  nasc: 1926, morte: 1978, pais: 'Brasil',            prog: false, ppc: MI16 },
-        { id: 'gordon',       nome: 'Edwin E. Gordon',          curto: 'Gordon',         nasc: 1927, morte: 2015, pais: 'Estados Unidos',    prog: true,  ppc: null },
-        { id: 'paynter',      nome: 'John Paynter',             curto: 'Paynter',        nasc: 1931, morte: 2010, pais: 'Inglaterra',        prog: true,  ppc: MI11 + ', cap. 8' },
-        { id: 'schafer',      nome: 'R. Murray Schafer',        curto: 'Schafer',        nasc: 1933, morte: 2021, pais: 'Canadá',            prog: true,  ppc: MI11 + ', cap. 9; Schafer (1986, 2012)' },
-        { id: 'wuytack',      nome: 'Jos Wuytack',              curto: 'Wuytack',        nasc: 1935, morte: null, pais: 'Bélgica',           prog: false, ppc: MI11 + ', cap. 10' },
-        { id: 'swanwick',     nome: 'Keith Swanwick',           curto: 'Swanwick',       nasc: 1937, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
-        { id: 'gramani',      nome: 'José Eduardo Gramani',     curto: 'Gramani',        nasc: 1944, morte: 1998, pais: 'Brasil',            prog: false, ppc: MI16 },
-        { id: 'thompson',     nome: 'Walter Thompson',          curto: 'Thompson',       nasc: 1952, morte: null, pais: 'Estados Unidos',    prog: true,  ppc: null },
-        { id: 'green',        nome: 'Lucy Green',               curto: 'Lucy Green',     nasc: 1957, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
-        { id: 'ciavatta',     nome: 'Lucas Ciavatta',           curto: 'Ciavatta',       nasc: 1965, morte: null, pais: 'Brasil',            prog: true,  ppc: MI16 }
+        { id: 'dalcroze', datas: 'slides',     nome: 'Émile Jaques-Dalcroze',    curto: 'Dalcroze',       nasc: 1865, morte: 1950, pais: 'Suíça',             prog: true,  ppc: MI11 + ', cap. 1' },
+        { id: 'kodaly', datas: 'slides',       nome: 'Zoltán Kodály',            curto: 'Kodály',         nasc: 1882, morte: 1967, pais: 'Hungria',           prog: true,  ppc: MI11 + ', cap. 2' },
+        { id: 'villalobos', datas: 'slides',   nome: 'Heitor Villa-Lobos',       curto: 'Villa-Lobos',    nasc: 1887, morte: 1959, pais: 'Brasil',            prog: true,  ppc: MI16 },
+        { id: 'sapereira', datas: 'slides',    nome: 'Antônio de Sá Pereira',    curto: 'Sá Pereira',     nasc: 1888, morte: 1966, pais: 'Brasil',            prog: true,  ppc: MI16 + ', cap. 2' },
+        { id: 'willems', datas: 'slides',      nome: 'Edgar Willems',            curto: 'Willems',        nasc: 1890, morte: 1978, pais: 'Bélgica / Suíça',   prog: true,  ppc: MI11 + ', cap. 3' },
+        { id: 'mignone', datas: 'externa',      nome: 'Liddy Chiaffarelli Mignone', rotulo: 'Liddy C. Mignone', curto: 'Liddy Mignone', nasc: 1891, morte: 1962, pais: 'Brasil',           prog: true,  ppc: MI16 },
+        { id: 'orff', datas: 'slides',         nome: 'Carl Orff',                curto: 'Orff',           nasc: 1895, morte: 1982, pais: 'Alemanha',          prog: true,  ppc: MI11 + ', cap. 4' },
+        { id: 'martenot', datas: 'externa',     nome: 'Maurice Martenot',         curto: 'Martenot',       nasc: 1898, morte: 1980, pais: 'França',            prog: false, ppc: MI11 + ', cap. 5' },
+        { id: 'suzuki', datas: 'slides',       nome: 'Shinichi Suzuki',          curto: 'Suzuki',         nasc: 1898, morte: 1998, pais: 'Japão',             prog: true,  ppc: MI11 + ', cap. 6; Gerling (1989)' },
+        { id: 'gazzi', datas: 'slides',        nome: 'Gazzi de Sá',              curto: 'Gazzi de Sá',    nasc: 1901, morte: 1981, pais: 'Brasil',            prog: true,  ppc: MI16 },
+        { id: 'koellreutter', datas: 'slides', nome: 'Hans-Joachim Koellreutter', rotulo: 'Hans-J. Koellreutter', curto: 'Koellreutter',  nasc: 1915, morte: 2005, pais: 'Alemanha / Brasil', prog: true,  ppc: MI16 + '; Brito (2001); Koellreutter (1990)' },
+        { id: 'meyer', datas: 'externa',        nome: 'Gertrud Meyer-Denkmann', rotulo: 'G. Meyer-Denkmann', curto: 'Meyer-Denkmann', nasc: 1918, morte: 2014, pais: 'Alemanha',          prog: false, ppc: MI11 + ', cap. 7' },
+        { id: 'scliar', datas: 'externa',       nome: 'Esther Scliar',            curto: 'Esther Scliar',  nasc: 1926, morte: 1978, pais: 'Brasil',            prog: false, ppc: MI16 },
+        { id: 'gordon', datas: 'slides',       nome: 'Edwin E. Gordon',          curto: 'Gordon',         nasc: 1927, morte: 2015, pais: 'Estados Unidos',    prog: true,  ppc: null },
+        { id: 'paynter', datas: 'slides',      nome: 'John Paynter',             curto: 'Paynter',        nasc: 1931, morte: 2010, pais: 'Inglaterra',        prog: true,  ppc: MI11 + ', cap. 8' },
+        { id: 'schafer', datas: 'externa',      nome: 'R. Murray Schafer',        curto: 'Schafer',        nasc: 1933, morte: 2021, pais: 'Canadá',            prog: true,  ppc: MI11 + ', cap. 9; Schafer (1986, 2012)' },
+        { id: 'wuytack', datas: 'externa',      nome: 'Jos Wuytack',              curto: 'Wuytack',        nasc: 1935, morte: null, pais: 'Bélgica',           prog: false, ppc: MI11 + ', cap. 10' },
+        { id: 'swanwick', datas: 'externa',     nome: 'Keith Swanwick',           curto: 'Swanwick',       nasc: 1937, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
+        { id: 'gramani', datas: 'externa',      nome: 'José Eduardo Gramani',     curto: 'Gramani',        nasc: 1944, morte: 1998, pais: 'Brasil',            prog: false, ppc: MI16 },
+        { id: 'thompson', datas: 'slides',     nome: 'Walter Thompson',          curto: 'Thompson',       nasc: 1952, morte: null, pais: 'Estados Unidos',    prog: true,  ppc: null },
+        { id: 'green', datas: 'slides',        nome: 'Lucy Green',               curto: 'Lucy Green',     nasc: 1957, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
+        { id: 'ciavatta', datas: 'slides',     nome: 'Lucas Ciavatta',           curto: 'Ciavatta',       nasc: 1965, morte: null, pais: 'Brasil',            prog: true,  ppc: MI16 }
       ];
 
       var GUERRAS = [[1914, 1918], [1939, 1945]];
@@ -1028,6 +1032,7 @@
           tr.appendChild(mk('td', 'num', (e.morte == null ? '≈ ' + (AGORA - e.nasc) + ' (até hoje)' : String(e.morte - e.nasc))));
           tr.appendChild(mk('td', null, statusTxt(e)));
           tr.appendChild(mk('td', null, e.ppc || '—'));
+          tr.appendChild(mk('td', null, e.datas === 'slides' ? 'Slides da disciplina' : 'Fonte externa'));
           tbody.appendChild(tr);
         });
       }
