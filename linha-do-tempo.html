@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linha do tempo dos educadores musicais</title>
+  <meta name="description" content="Nascimento e morte dos educadores musicais estudados em Pedagogias em Educação Musical I e II (Unipampa): quem viveu ao mesmo tempo e quem veio depois de quem.">
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f9f9f7;
+      --surface: #fcfcfb;
+      --ink: #0b0b0b;
+      --ink-2: #52514e;
+      --muted: #898781;
+      --grid: #e1e0d9;
+      --axis: #c3c2b7;
+      --border: rgba(11, 11, 11, 0.10);
+      --s1: #2a78d6;
+      --s2: #eb6834;
+      --band: rgba(11, 11, 11, 0.045);
+      --sel-band: rgba(11, 11, 11, 0.085);
+      --wash: rgba(11, 11, 11, 0.045);
+      --wash-strong: rgba(11, 11, 11, 0.08);
+      --shadow: 0 8px 24px rgba(11, 11, 11, 0.14);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --page: #0d0d0d;
+        --surface: #1a1a19;
+        --ink: #ffffff;
+        --ink-2: #c3c2b7;
+        --grid: #2c2c2a;
+        --axis: #383835;
+        --border: rgba(255, 255, 255, 0.10);
+        --s1: #3987e5;
+        --s2: #d95926;
+        --band: rgba(255, 255, 255, 0.05);
+        --sel-band: rgba(255, 255, 255, 0.10);
+        --wash: rgba(255, 255, 255, 0.05);
+        --wash-strong: rgba(255, 255, 255, 0.09);
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink-2: #c3c2b7;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --s1: #3987e5;
+      --s2: #d95926;
+      --band: rgba(255, 255, 255, 0.05);
+      --sel-band: rgba(255, 255, 255, 0.10);
+      --wash: rgba(255, 255, 255, 0.05);
+      --wash-strong: rgba(255, 255, 255, 0.09);
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--ink-2);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+      line-height: 1.1;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 72ch;
+      color: var(--ink-2);
+    }
+
+    .lede + .lede { margin-top: 8px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    /* ---------- filtro (uma linha, acima do gráfico) ---------- */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+      margin: 24px 0 12px;
+    }
+
+    .filters .label {
+      color: var(--ink-2);
+      font-size: 0.85rem;
+    }
+
+    .seg {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .seg button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.88rem;
+      line-height: 1;
+      padding: 9px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      min-height: 36px;
+    }
+
+    .seg button:hover { background: var(--wash); }
+
+    .seg button[aria-pressed="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--surface);
+      font-weight: 600;
+    }
+
+    .seg button:focus-visible,
+    .row:focus-visible,
+    .rel-item:focus-visible,
+    .clear:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
+    }
+
+    /* ---------- layout ---------- */
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    @media (min-width: 1000px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr) 340px;
+        align-items: start;
+      }
+      .panel {
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+      }
+    }
+
+    @media (max-width: 999px) {
+      .panel {
+        position: sticky;
+        bottom: 8px;
+        z-index: 6;
+        max-height: 44vh;
+        overflow: auto;
+        box-shadow: var(--shadow);
+      }
+      .panel:not(.has-sel) { display: none; }
+    }
+
+    /* ---------- legenda ---------- */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--grid);
+      color: var(--ink-2);
+      font-size: 0.84rem;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swatch {
+      display: inline-block;
+      width: 22px;
+      height: 10px;
+      border-radius: 4px;
+      background: var(--s1);
+      flex: none;
+    }
+
+    .swatch.bib { background: var(--s2); }
+    .swatch.open {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      -webkit-mask-image: linear-gradient(to right, #000 40%, transparent);
+      mask-image: linear-gradient(to right, #000 40%, transparent);
+    }
+    .swatch.guerra {
+      background: var(--band);
+      border: 1px solid var(--axis);
+      border-radius: 2px;
+      height: 12px;
+    }
+
+    /* ---------- gráfico ---------- */
+    .chart {
+      --lw: 240px;
+      --rpad: 18px;
+      --x: 0%;
+      position: relative;
+    }
+
+    @media (max-width: 640px) {
+      .chart { --lw: 116px; --rpad: 12px; }
+    }
+
+    .axis {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: var(--lw) minmax(0, 1fr);
+      padding-right: var(--rpad);
+      height: 40px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--axis);
+    }
+
+    .axis .hint {
+      align-self: center;
+      padding-left: 16px;
+      color: var(--ink-2);
+      font-size: 0.76rem;
+      line-height: 1.25;
+    }
+
+    .axis-track { position: relative; }
+
+    .tick {
+      position: absolute;
+      bottom: 0;
+      width: 1px;
+      height: 6px;
+      background: var(--axis);
+    }
+
+    .tick-label {
+      position: absolute;
+      bottom: 10px;
+      transform: translateX(-50%);
+      color: var(--ink-2);
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .chip {
+      position: absolute;
+      top: 5px;
+      z-index: 2;
+      display: none;
+      padding: 3px 9px;
+      background: var(--surface);
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      color: var(--ink);
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .chip b { font-variant-numeric: tabular-nums; }
+
+    .rows {
+      position: relative;
+      padding: 6px 0 10px;
+    }
+
+    .list {
+      position: relative;
+      z-index: 1;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .list > li { margin: 0; }
+
+    .plot {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--lw);
+      right: var(--rpad);
+      pointer-events: none;
+    }
+
+    .plot.back { z-index: 0; }
+    .plot.front { z-index: 3; }
+
+    .gl {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--grid);
+    }
+
+    .war {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background: var(--band);
+    }
+
+    .selband {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: none;
+      background: var(--sel-band);
+      border-left: 1px solid var(--axis);
+      border-right: 1px solid var(--axis);
+    }
+
+    .cross {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      display: none;
+      background: var(--ink);
+      opacity: 0.55;
+    }
+
+    .row {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: var(--lw) minmax(0, 1fr);
+      width: 100%;
+      margin: 0;
+      padding: 0 var(--rpad) 0 0;
+      background: none;
+      border: 0;
+      border-radius: 6px;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .row:hover { background: var(--wash); }
+    .row.sel { background: var(--wash-strong); }
+
+    .row.sel::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      background: var(--ink);
+      border-radius: 2px;
+    }
+
+    .chart.has-sel .row.dim { opacity: 0.3; }
+
+    .lab {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      padding: 6px 10px 6px 16px;
+    }
+
+    .name {
+      overflow: hidden;
+      font-size: 0.93rem;
+      font-weight: 600;
+      line-height: 1.25;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .n-short { display: none; }
+
+    .row.sel .name { text-decoration: underline; text-underline-offset: 3px; }
+
+    .sub {
+      color: var(--ink-2);
+      font-size: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .yrs { font-variant-numeric: tabular-nums; }
+
+    .tag {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 0 6px;
+      border: 1px solid var(--axis);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      line-height: 1.45;
+      white-space: nowrap;
+    }
+
+    .hint-short { display: none; }
+
+    @media (max-width: 640px) {
+      .pais { display: none; }
+      .n-full { display: none; }
+      .n-short { display: inline; }
+      .lab { padding: 6px 6px 6px 10px; }
+      .name { font-size: 0.82rem; white-space: normal; }
+      .axis .hint { padding-left: 10px; }
+      .hint-full { display: none; }
+      .hint-short { display: inline; }
+    }
+
+    .track {
+      position: relative;
+      height: 50px;
+    }
+
+    .bar {
+      position: absolute;
+      top: 50%;
+      height: 12px;
+      margin-top: -6px;
+      border-radius: 4px;
+      background: var(--s1);
+    }
+
+    .row.bib .bar { background: var(--s2); }
+
+    .bar.open {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+      mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+    }
+
+    .row:hover .bar { filter: brightness(1.1); }
+
+    /* marcador sobre a barra na posição da cruzeta (anel de 2px na cor da superfície) */
+    .track::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: var(--x);
+      display: none;
+      width: 10px;
+      height: 10px;
+      margin: -5px 0 0 -5px;
+      border-radius: 50%;
+      background: var(--ink);
+      box-shadow: 0 0 0 2px var(--surface);
+    }
+
+    .chart.xhair .row.alive .track::after { display: block; }
+
+    /* ---------- tooltip ---------- */
+    .tip {
+      position: fixed;
+      z-index: 30;
+      display: none;
+      max-width: 280px;
+      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      font-size: 0.85rem;
+      line-height: 1.35;
+      pointer-events: none;
+    }
+
+    .tip .t-years {
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tip .t-name { color: var(--ink-2); }
+    .tip .t-meta { margin-top: 4px; color: var(--ink-2); }
+    .tip .t-status { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+    .tip .t-year {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--grid);
+    }
+
+    /* ---------- painel ---------- */
+    .panel { padding: 16px; }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .panel .meta { margin: 4px 0 0; color: var(--ink-2); font-size: 0.88rem; }
+    .panel .empty { margin: 0; color: var(--ink-2); font-size: 0.9rem; }
+    .panel .empty + .empty { margin-top: 8px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      color: var(--ink-2);
+      font-size: 0.8rem;
+    }
+
+    .panel h3 {
+      margin: 16px 0 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--ink-2);
+      letter-spacing: 0.02em;
+    }
+
+    .rel-list { list-style: none; margin: 0; padding: 0; }
+
+    .rel-item {
+      appearance: none;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      padding: 7px 8px;
+      background: none;
+      border: 0;
+      border-top: 1px solid var(--grid);
+      border-radius: 0;
+      color: inherit;
+      font: inherit;
+      font-size: 0.9rem;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .rel-item:hover { background: var(--wash); }
+    .rel-item .yrs2 { display: block; color: var(--ink-2); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+    .rel-item .com { color: var(--ink-2); font-size: 0.82rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+    .none { margin: 0; color: var(--ink-2); font-size: 0.85rem; }
+
+    .clear {
+      appearance: none;
+      margin-top: 14px;
+      padding: 8px 12px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .clear:hover { background: var(--wash); }
+
+    /* ---------- tabela e notas ---------- */
+    details.table-view {
+      margin-top: 16px;
+      padding: 0;
+    }
+
+    details.table-view > summary {
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .table-wrap { overflow-x: auto; border-top: 1px solid var(--grid); }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    caption {
+      padding: 10px 16px;
+      color: var(--ink-2);
+      text-align: left;
+      font-size: 0.82rem;
+    }
+
+    th, td {
+      padding: 9px 16px;
+      border-top: 1px solid var(--grid);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    thead th { color: var(--ink-2); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    tbody th { font-weight: 600; }
+    td.num { font-variant-numeric: tabular-nums; }
+
+    .notes {
+      margin-top: 24px;
+      padding: 18px 20px;
+    }
+
+    .notes h2 { margin: 0 0 8px; font-size: 1rem; }
+    .notes ul { margin: 0; padding-left: 1.15em; color: var(--ink-2); font-size: 0.9rem; }
+    .notes li + li { margin-top: 6px; }
+
+    /* acessibilidade: textura (só em impressão / cores forçadas) — 45° tom sobre tom */
+    @media print, (forced-colors: active) {
+      .bar, .swatch { forced-color-adjust: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .row.bib .bar, .swatch.bib {
+        background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.35) 0 2px, transparent 2px 6px);
+      }
+    }
+
+    @media print {
+      .filters, .panel, .chip, .cross, .tip { display: none !important; }
+      .axis { position: static; }
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="kicker">Pedagogias em Educação Musical I e II · Unipampa</p>
+      <h1>Linha do tempo dos educadores musicais</h1>
+      <p class="lede">Cada barra é uma vida, do ano de nascimento ao ano de morte, e os educadores estão em ordem de nascimento. Onde as barras se sobrepõem no eixo do tempo, essas pessoas foram contemporâneas.</p>
+      <p class="lede">Passe o mouse sobre o gráfico para ver quem estava vivo em cada ano. Clique (ou toque) em um nome para destacar com quem essa vida se cruzou.</p>
+    </header>
+
+    <div class="filters" role="group" aria-label="Filtrar educadores">
+      <span class="label">Mostrar:</span>
+      <span class="seg" id="filtro"></span>
+    </div>
+
+    <div class="layout">
+      <section class="card" aria-label="Linha do tempo">
+        <div class="legend" id="legend">
+          <span class="key"><span class="swatch"></span>No programa da disciplina</span>
+          <span class="key"><span class="swatch bib"></span>Só na bibliografia do PPC</span>
+          <span class="key"><span class="swatch open"></span>Sem data de morte registrada</span>
+          <span class="key"><span class="swatch guerra"></span>Guerras mundiais (1914–18 e 1939–45)</span>
+        </div>
+
+        <div class="chart" id="chart">
+          <div class="axis" id="axis">
+            <div class="hint"><span class="hint-full">Ordenado por<br>ano de nascimento</span><span class="hint-short">Por ano de<br>nascimento</span></div>
+            <div class="axis-track" id="axisTrack"><div class="chip" id="chip"></div></div>
+          </div>
+          <div class="rows">
+            <div class="plot back" id="plotBack" aria-hidden="true"></div>
+            <div class="plot front" aria-hidden="true"><div class="cross" id="cross"></div></div>
+            <ol class="list" id="list"></ol>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card panel" id="panel" aria-live="polite" aria-label="Contemporâneos do educador selecionado"></aside>
+    </div>
+
+    <details class="card table-view" id="tableView">
+      <summary>Ver os dados em tabela</summary>
+      <div class="table-wrap">
+        <table>
+          <caption>Educadores em ordem de nascimento. “—” na coluna do PPC: não citado na bibliografia de Pedagogias I e II.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Educador</th>
+              <th scope="col">País</th>
+              <th scope="col">Nascimento</th>
+              <th scope="col">Morte</th>
+              <th scope="col">Anos de vida</th>
+              <th scope="col">Situação</th>
+              <th scope="col">Bibliografia do PPC</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </details>
+
+    <section class="card notes">
+      <h2>Como ler, e o que este gráfico não diz</h2>
+      <ul>
+        <li><strong>A barra mostra a vida, não o período de atuação.</strong> Muitos educadores começaram a atuar décadas depois de nascer; a linha do tempo serve para situar gerações, não para datar cada proposta.</li>
+        <li><strong>Contemporâneo não quer dizer “conviveram” nem “se influenciaram”.</strong> Significa apenas que os anos de vida se sobrepõem. Os “anos em comum” são contados por ano-calendário, então podem variar em ±1.</li>
+        <li><strong>Barra esmaecida à direita:</strong> não há data de morte registrada nas fontes consultadas (a barra vai até o ano corrente).</li>
+        <li><strong>Situação:</strong> “No programa” = educadores com material trabalhado nas aulas; “Só na bibliografia do PPC” = citados nas obras de referência de Pedagogias I e II (Mateiro &amp; Ilari, 2011 e 2016), mas sem material próprio nas aulas.</li>
+        <li>Datas conferidas em enciclopédias e páginas institucionais (Wikipédia, Wikidata, universidades). Ao encontrar divergência, vale a fonte primária.</li>
+      </ul>
+    </section>
+  </main>
+
+  <div class="tip" id="tip" role="tooltip"></div>
+
+  <noscript>
+    <main><p>Esta página precisa de JavaScript para desenhar a linha do tempo.</p></main>
+  </noscript>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* =====================================================================
+         DADOS
+         nasc / morte: anos (morte = null quando não há data registrada).
+         prog: true  → educador com material trabalhado nas aulas (programa)
+               false → citado só na bibliografia do PPC (Mateiro & Ilari)
+         ppc:  onde aparece na bibliografia de Pedagogias I e II (ou null).
+         Para mudar a classificação de alguém, basta trocar prog: true/false.
+         ===================================================================== */
+      var MI11 = 'Mateiro & Ilari (2011)';
+      var MI16 = 'Mateiro & Ilari (2016)';
+
+      var EDU = [
+        { id: 'dalcroze',     nome: 'Émile Jaques-Dalcroze',    curto: 'Dalcroze',       nasc: 1865, morte: 1950, pais: 'Suíça',             prog: true,  ppc: MI11 + ', cap. 1' },
+        { id: 'kodaly',       nome: 'Zoltán Kodály',            curto: 'Kodály',         nasc: 1882, morte: 1967, pais: 'Hungria',           prog: true,  ppc: MI11 + ', cap. 2' },
+        { id: 'villalobos',   nome: 'Heitor Villa-Lobos',       curto: 'Villa-Lobos',    nasc: 1887, morte: 1959, pais: 'Brasil',            prog: true,  ppc: MI16 },
+        { id: 'sapereira',    nome: 'Antônio de Sá Pereira',    curto: 'Sá Pereira',     nasc: 1888, morte: 1966, pais: 'Brasil',            prog: true,  ppc: MI16 + ', cap. 2' },
+        { id: 'willems',      nome: 'Edgar Willems',            curto: 'Willems',        nasc: 1890, morte: 1978, pais: 'Bélgica / Suíça',   prog: true,  ppc: MI11 + ', cap. 3' },
+        { id: 'mignone',      nome: 'Liddy Chiaffarelli Mignone', rotulo: 'Liddy C. Mignone', curto: 'Liddy Mignone', nasc: 1891, morte: 1962, pais: 'Brasil',           prog: false, ppc: MI16 },
+        { id: 'orff',         nome: 'Carl Orff',                curto: 'Orff',           nasc: 1895, morte: 1982, pais: 'Alemanha',          prog: true,  ppc: MI11 + ', cap. 4' },
+        { id: 'martenot',     nome: 'Maurice Martenot',         curto: 'Martenot',       nasc: 1898, morte: 1980, pais: 'França',            prog: false, ppc: MI11 + ', cap. 5' },
+        { id: 'suzuki',       nome: 'Shinichi Suzuki',          curto: 'Suzuki',         nasc: 1898, morte: 1998, pais: 'Japão',             prog: true,  ppc: MI11 + ', cap. 6; Gerling (1989)' },
+        { id: 'gazzi',        nome: 'Gazzi de Sá',              curto: 'Gazzi de Sá',    nasc: 1901, morte: 1981, pais: 'Brasil',            prog: true,  ppc: MI16 },
+        { id: 'koellreutter', nome: 'Hans-Joachim Koellreutter', rotulo: 'Hans-J. Koellreutter', curto: 'Koellreutter',  nasc: 1915, morte: 2005, pais: 'Alemanha / Brasil', prog: true,  ppc: MI16 + '; Brito (2001); Koellreutter (1990)' },
+        { id: 'meyer',        nome: 'Gertrud Meyer-Denkmann', rotulo: 'G. Meyer-Denkmann', curto: 'Meyer-Denkmann', nasc: 1918, morte: 2014, pais: 'Alemanha',          prog: false, ppc: MI11 + ', cap. 7' },
+        { id: 'scliar',       nome: 'Esther Scliar',            curto: 'Esther Scliar',  nasc: 1926, morte: 1978, pais: 'Brasil',            prog: false, ppc: MI16 },
+        { id: 'gordon',       nome: 'Edwin E. Gordon',          curto: 'Gordon',         nasc: 1927, morte: 2015, pais: 'Estados Unidos',    prog: true,  ppc: null },
+        { id: 'paynter',      nome: 'John Paynter',             curto: 'Paynter',        nasc: 1931, morte: 2010, pais: 'Inglaterra',        prog: true,  ppc: MI11 + ', cap. 8' },
+        { id: 'schafer',      nome: 'R. Murray Schafer',        curto: 'Schafer',        nasc: 1933, morte: 2021, pais: 'Canadá',            prog: true,  ppc: MI11 + ', cap. 9; Schafer (1986, 2012)' },
+        { id: 'wuytack',      nome: 'Jos Wuytack',              curto: 'Wuytack',        nasc: 1935, morte: null, pais: 'Bélgica',           prog: false, ppc: MI11 + ', cap. 10' },
+        { id: 'swanwick',     nome: 'Keith Swanwick',           curto: 'Swanwick',       nasc: 1937, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
+        { id: 'gramani',      nome: 'José Eduardo Gramani',     curto: 'Gramani',        nasc: 1944, morte: 1998, pais: 'Brasil',            prog: false, ppc: MI16 },
+        { id: 'thompson',     nome: 'Walter Thompson',          curto: 'Thompson',       nasc: 1952, morte: null, pais: 'Estados Unidos',    prog: true,  ppc: null },
+        { id: 'green',        nome: 'Lucy Green',               curto: 'Lucy Green',     nasc: 1957, morte: null, pais: 'Inglaterra',        prog: true,  ppc: null },
+        { id: 'ciavatta',     nome: 'Lucas Ciavatta',           curto: 'Ciavatta',       nasc: 1965, morte: null, pais: 'Brasil',            prog: true,  ppc: MI16 }
+      ];
+
+      var GUERRAS = [[1914, 1918], [1939, 1945]];
+
+      /* ===================================================================== */
+
+      var AGORA = new Date().getFullYear();
+      var MIN = 1860;
+      var MAX = Math.max(2030, Math.ceil((AGORA + 4) / 10) * 10);
+      var SPAN = MAX - MIN;
+
+      EDU.sort(function (a, b) {
+        return a.nasc - b.nasc || (a.morte == null ? 9999 : a.morte) - (b.morte == null ? 9999 : b.morte);
+      });
+
+      var byId = {};
+      EDU.forEach(function (e) { byId[e.id] = e; });
+
+      var $ = function (s) { return document.querySelector(s); };
+      var mk = function (tag, cls, txt) {
+        var n = document.createElement(tag);
+        if (cls) n.className = cls;
+        if (txt != null) n.textContent = txt;
+        return n;
+      };
+
+      var fim = function (e) { return e.morte == null ? AGORA : e.morte; };
+      var pct = function (y) { return ((y - MIN) / SPAN) * 100; };
+      var vivoEm = function (e, y) { return y >= e.nasc && y <= fim(e); };
+      var anos = function (n) { return n === 1 ? '1 ano' : n + ' anos'; };
+      var faixa = function (e) { return e.nasc + '–' + (e.morte == null ? '' : e.morte); };
+      var sobrep = function (a, b) { return Math.min(fim(a), fim(b)) - Math.max(a.nasc, b.nasc); };
+      var statusTxt = function (e) { return e.prog ? 'No programa da disciplina' : 'Só na bibliografia do PPC'; };
+      var vidaTxt = function (e) {
+        var n = fim(e) - e.nasc;
+        return e.morte == null ? 'hoje, cerca de ' + anos(n) + ' desde o nascimento' : 'cerca de ' + anos(n) + ' de vida';
+      };
+
+      var state = { filtro: 'todos', sel: null };
+
+      /* ---------- filtro ---------- */
+      var FILTROS = [
+        { id: 'todos', txt: 'Todos', n: EDU.length },
+        { id: 'aula', txt: 'No programa', n: EDU.filter(function (e) { return e.prog; }).length },
+        { id: 'ppc', txt: 'Só na bibliografia do PPC', n: EDU.filter(function (e) { return !e.prog; }).length }
+      ];
+      var filtroEl = $('#filtro');
+      FILTROS.forEach(function (f) {
+        var b = mk('button', null, f.txt + ' · ' + f.n);
+        b.type = 'button';
+        b.dataset.f = f.id;
+        b.addEventListener('click', function () { state.filtro = f.id; render(); });
+        filtroEl.appendChild(b);
+      });
+
+      /* ---------- fundo do gráfico: grade e guerras ---------- */
+      var plotBack = $('#plotBack');
+      for (var y = MIN; y <= MAX; y += 10) {
+        var g = mk('div', 'gl');
+        g.style.left = pct(y) + '%';
+        plotBack.appendChild(g);
+      }
+      GUERRAS.forEach(function (w) {
+        var d = mk('div', 'war');
+        d.style.left = pct(w[0]) + '%';
+        d.style.width = (pct(w[1]) - pct(w[0])) + '%';
+        plotBack.appendChild(d);
+      });
+      var selband = mk('div', 'selband');
+      plotBack.appendChild(selband);
+
+      /* ---------- linhas ---------- */
+      var rowsEl = $('#list');
+      var itemEls = {};   // id -> <li>
+      var btnEls = {};    // id -> <button>
+
+      EDU.forEach(function (e) {
+        var li = mk('li');
+        var b = mk('button', 'row ' + (e.prog ? 'prog' : 'bib'));
+        b.type = 'button';
+        b.dataset.id = e.id;
+        b.setAttribute('aria-pressed', 'false');
+        b.setAttribute('aria-label',
+          e.nome + ', ' + (e.morte == null ? e.nasc + ', sem data de morte registrada' : e.nasc + ' a ' + e.morte) +
+          '. ' + statusTxt(e) + '. Ativar para destacar os contemporâneos.');
+
+        var lab = mk('span', 'lab');
+        var nm = mk('span', 'name');
+        nm.appendChild(mk('span', 'n-full', e.rotulo || e.nome));
+        nm.appendChild(mk('span', 'n-short', e.curto));
+        lab.appendChild(nm);
+        var sub = mk('span', 'sub');
+        sub.appendChild(mk('span', 'yrs', faixa(e)));
+        sub.appendChild(mk('span', 'pais', ' · ' + e.pais));
+        if (!e.prog) sub.appendChild(mk('span', 'tag', 'só PPC'));
+        lab.appendChild(sub);
+
+        var track = mk('span', 'track');
+        var bar = mk('span', 'bar' + (e.morte == null ? ' open' : ''));
+        bar.style.left = pct(e.nasc) + '%';
+        bar.style.width = (pct(fim(e)) - pct(e.nasc)) + '%';
+        track.appendChild(bar);
+
+        b.appendChild(lab);
+        b.appendChild(track);
+        li.appendChild(b);
+        rowsEl.appendChild(li);
+        itemEls[e.id] = li;
+        btnEls[e.id] = b;
+      });
+
+      /* ---------- eixo ---------- */
+      var axisTrack = $('#axisTrack');
+      var chip = $('#chip');
+      var chart = $('#chart');
+
+      function buildAxis() {
+        Array.prototype.slice.call(axisTrack.querySelectorAll('.tick, .tick-label')).forEach(function (n) { n.remove(); });
+        var estreito = axisTrack.clientWidth < 460;
+        for (var y = MIN; y <= MAX; y += 10) {
+          var t = mk('div', 'tick');
+          t.style.left = pct(y) + '%';
+          axisTrack.appendChild(t);
+          var rotulado = estreito ? y % 40 === 20 : y % 20 === 0;
+          if (rotulado) {
+            var l = mk('div', 'tick-label', String(y));
+            l.style.left = pct(y) + '%';
+            axisTrack.appendChild(l);
+          }
+        }
+      }
+      buildAxis();
+      if (window.ResizeObserver) new ResizeObserver(buildAxis).observe(axisTrack);
+      else window.addEventListener('resize', buildAxis);
+
+      /* ---------- render de estado ---------- */
+      var panel = $('#panel');
+      var tbody = $('#tbody');
+
+      function visiveis() {
+        return EDU.filter(function (e) {
+          return state.filtro === 'todos' || (state.filtro === 'aula' ? e.prog : !e.prog);
+        });
+      }
+
+      function render() {
+        var vis = visiveis();
+        var visIds = {};
+        vis.forEach(function (e) { visIds[e.id] = true; });
+        if (state.sel && !visIds[state.sel]) state.sel = null;
+
+        Array.prototype.forEach.call(filtroEl.children, function (b) {
+          b.setAttribute('aria-pressed', String(b.dataset.f === state.filtro));
+        });
+
+        var S = state.sel ? byId[state.sel] : null;
+        chart.classList.toggle('has-sel', !!S);
+
+        EDU.forEach(function (e) {
+          var li = itemEls[e.id], b = btnEls[e.id];
+          li.hidden = !visIds[e.id];
+          var isSel = S && e.id === S.id;
+          var isRel = S && !isSel && sobrep(S, e) >= 0;
+          b.classList.toggle('sel', !!isSel);
+          b.classList.toggle('dim', !!S && !isSel && !isRel);
+          b.setAttribute('aria-pressed', String(!!isSel));
+        });
+
+        if (S) {
+          selband.style.display = 'block';
+          selband.style.left = pct(S.nasc) + '%';
+          selband.style.width = (pct(fim(S)) - pct(S.nasc)) + '%';
+        } else {
+          selband.style.display = 'none';
+        }
+
+        renderPanel(vis, S);
+        renderTable(vis);
+      }
+
+      function relItem(o, S) {
+        var b = mk('button', 'rel-item');
+        b.type = 'button';
+        var left = mk('span');
+        left.appendChild(mk('span', null, o.curto));
+        left.appendChild(mk('span', 'yrs2', faixa(o)));
+        var n = sobrep(S, o);
+        b.appendChild(left);
+        b.appendChild(mk('span', 'com', n > 0 ? anos(n) + ' em comum' : 'mesmo ano'));
+        b.addEventListener('click', function () { state.sel = o.id; render(); });
+        var li = mk('li');
+        li.appendChild(b);
+        return li;
+      }
+
+      function grupo(titulo, lista, S) {
+        var frag = document.createDocumentFragment();
+        frag.appendChild(mk('h3', null, titulo));
+        if (!lista.length) { frag.appendChild(mk('p', 'none', 'Ninguém entre os educadores exibidos.')); return frag; }
+        var ul = mk('ul', 'rel-list');
+        lista.forEach(function (o) { ul.appendChild(relItem(o, S)); });
+        frag.appendChild(ul);
+        return frag;
+      }
+
+      function renderPanel(vis, S) {
+        panel.replaceChildren();
+        panel.classList.toggle('has-sel', !!S);
+
+        if (!S) {
+          panel.appendChild(mk('p', 'empty', 'Selecione um educador no gráfico para ver quem viveu ao mesmo tempo.'));
+          panel.appendChild(mk('p', 'empty', 'A faixa cinza vertical marca os anos de vida da pessoa selecionada: as barras que tocam essa faixa são de contemporâneos.'));
+          return;
+        }
+
+        var badge = mk('span', 'badge');
+        badge.appendChild(mk('span', 'swatch' + (S.prog ? '' : ' bib')));
+        badge.appendChild(document.createTextNode(statusTxt(S)));
+        panel.appendChild(badge);
+
+        panel.appendChild(mk('h2', null, S.nome));
+        panel.appendChild(mk('p', 'meta', faixa(S) + (S.morte == null ? ' (sem data de morte registrada)' : '') + ' · ' + S.pais));
+        panel.appendChild(mk('p', 'meta', vidaTxt(S)));
+        panel.appendChild(mk('p', 'meta', 'PPC: ' + (S.ppc || 'não citado na bibliografia de Pedagogias I e II')));
+
+        var outros = vis.filter(function (o) { return o.id !== S.id; });
+        var antes = outros.filter(function (o) { return o.nasc < S.nasc && fim(o) >= S.nasc; });
+        var depois = outros.filter(function (o) { return o.nasc >= S.nasc && o.nasc <= fim(S); });
+        var fora = outros.filter(function (o) { return sobrep(S, o) < 0; });
+
+        panel.appendChild(grupo('Quando ' + S.curto + ' nasceu, já viviam', antes, S));
+        panel.appendChild(grupo('Nasceram durante a vida de ' + S.curto, depois, S));
+
+        if (fora.length) {
+          panel.appendChild(mk('h3', null, 'Vidas que não se sobrepõem'));
+          panel.appendChild(mk('p', 'none', fora.map(function (o) { return o.curto; }).join(', ') + '.'));
+        }
+
+        var clear = mk('button', 'clear', 'Limpar seleção (Esc)');
+        clear.type = 'button';
+        clear.addEventListener('click', function () { state.sel = null; render(); });
+        panel.appendChild(clear);
+      }
+
+      function renderTable(vis) {
+        tbody.replaceChildren();
+        vis.forEach(function (e) {
+          var tr = mk('tr');
+          var th = mk('th', null, e.nome);
+          th.scope = 'row';
+          tr.appendChild(th);
+          tr.appendChild(mk('td', null, e.pais));
+          tr.appendChild(mk('td', 'num', String(e.nasc)));
+          tr.appendChild(mk('td', 'num', e.morte == null ? 'sem registro' : String(e.morte)));
+          tr.appendChild(mk('td', 'num', (e.morte == null ? '≈ ' + (AGORA - e.nasc) + ' (até hoje)' : String(e.morte - e.nasc))));
+          tr.appendChild(mk('td', null, statusTxt(e)));
+          tr.appendChild(mk('td', null, e.ppc || '—'));
+          tbody.appendChild(tr);
+        });
+      }
+
+      /* ---------- interação: cruzeta por ano, tooltip, seleção ---------- */
+      var tip = $('#tip');
+      var cross = $('#cross');
+
+      function contextoAno(e, y) {
+        if (y < e.nasc) return 'Em ' + y + ': ainda não havia nascido';
+        if (y > fim(e)) return 'Em ' + y + ': já havia falecido';
+        return 'Em ' + y + ': ' + anos(y - e.nasc) + ' de idade';
+      }
+
+      function showTip(e, y) {
+        tip.replaceChildren();
+        tip.appendChild(mk('div', 't-years', faixa(e) + (e.morte == null ? ' (sem data de morte registrada)' : '')));
+        tip.appendChild(mk('div', 't-name', e.nome));
+        tip.appendChild(mk('div', 't-meta', e.pais + ' · ' + vidaTxt(e)));
+        var st = mk('div', 't-status');
+        st.appendChild(mk('span', 'swatch' + (e.prog ? '' : ' bib')));
+        st.appendChild(document.createTextNode(statusTxt(e)));
+        tip.appendChild(st);
+        if (y != null) tip.appendChild(mk('div', 't-year', contextoAno(e, y)));
+        tip.style.display = 'block';
+      }
+
+      function placeTip(x, y) {
+        var pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+        var L = x + pad, T = y + pad;
+        if (L + w > window.innerWidth - 8) L = x - w - pad;
+        if (T + h > window.innerHeight - 8) T = y - h - pad;
+        tip.style.left = Math.max(8, L) + 'px';
+        tip.style.top = Math.max(8, T) + 'px';
+      }
+
+      function hideTip() { tip.style.display = 'none'; }
+
+      function showCross(y) {
+        var p = pct(y);
+        cross.style.display = 'block';
+        cross.style.left = p + '%';
+        chart.style.setProperty('--x', p + '%');
+        chart.classList.add('xhair');
+
+        var n = 0;
+        EDU.forEach(function (e) {
+          var vivo = !itemEls[e.id].hidden && vivoEm(e, y);
+          btnEls[e.id].classList.toggle('alive', vivo);
+          if (vivo) n++;
+        });
+
+        chip.replaceChildren();
+        chip.appendChild(mk('b', null, String(y)));
+        chip.appendChild(document.createTextNode(' · ' + n + ' em vida'));
+        chip.style.display = 'block';
+        var w = chip.offsetWidth, tw = axisTrack.clientWidth;
+        var px = Math.min(Math.max((p / 100) * tw - w / 2, 0), tw - w);
+        chip.style.left = px + 'px';
+      }
+
+      function hideCross() {
+        cross.style.display = 'none';
+        chip.style.display = 'none';
+        chart.classList.remove('xhair');
+        EDU.forEach(function (e) { btnEls[e.id].classList.remove('alive'); });
+      }
+
+      chart.addEventListener('pointermove', function (ev) {
+        if (ev.pointerType === 'touch') return;
+        var r = plotBack.getBoundingClientRect();
+        var t = (ev.clientX - r.left) / r.width;
+        var dentro = t >= 0 && t <= 1;
+        var ano = Math.round(MIN + t * SPAN);
+        if (dentro) showCross(ano); else hideCross();
+
+        var row = ev.target.closest ? ev.target.closest('.row') : null;
+        if (row) {
+          showTip(byId[row.dataset.id], dentro ? ano : null);
+          placeTip(ev.clientX, ev.clientY);
+        } else {
+          hideTip();
+        }
+      });
+
+      chart.addEventListener('pointerleave', function () { hideCross(); hideTip(); });
+
+      chart.addEventListener('focusin', function (ev) {
+        var row = ev.target.closest ? ev.target.closest('.row') : null;
+        if (!row || !row.matches(':focus-visible')) return;
+        showTip(byId[row.dataset.id], null);
+        var r = row.querySelector('.bar').getBoundingClientRect();
+        placeTip(r.left + r.width / 2, r.bottom);
+      });
+      chart.addEventListener('focusout', hideTip);
+
+      chart.addEventListener('click', function (ev) {
+        var row = ev.target.closest ? ev.target.closest('.row') : null;
+        if (!row) return;
+        var id = row.dataset.id;
+        state.sel = state.sel === id ? null : id;
+        render();
+      });
+
+      chart.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return;
+        var row = ev.target.closest ? ev.target.closest('.row') : null;
+        if (!row) return;
+        var vis = EDU.filter(function (e) { return !itemEls[e.id].hidden; });
+        var i = vis.findIndex(function (e) { return e.id === row.dataset.id; });
+        var j = ev.key === 'ArrowDown' ? Math.min(i + 1, vis.length - 1) : Math.max(i - 1, 0);
+        ev.preventDefault();
+        btnEls[vis[j].id].focus();
+      });
+
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape' && state.sel) { state.sel = null; render(); }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
